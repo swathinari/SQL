@@ -1,0 +1,97 @@
+# Rename the column in table
+-----------------------------------------------------
+mysql> alter table customer 
+    ->rename column products to pid;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+********************************************
+# update column datatype in the table
+---------------------------------------------
+mysql> alter table customer
+    -> modify column products int(10);
+Query OK, 0 rows affected, 1 warning (0.10 sec)
+Records: 0  Duplicates: 0  Warnings: 1
+
+********************************************
+#create table
+------------------------
+mysql> create table customer(
+    -> cid int,
+    -> cname varchar(10) NOT NULL,
+    -> price int(10) NOT NULL,
+    -> products varchar(10),
+    -> primary key (cid)
+    -> );
+Query OK, 0 rows affected, 1 warning (0.15 sec)
+
+********************************************
+# insert values into table
+--------------------------
+mysql> insert into customer values(102,"suri",120,201),
+    -> (103,"kiran",100,200),
+    -> (104,"janu",80,201),
+    -> (105,"gopi",280,202);
+Query OK, 4 rows affected (0.01 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+********************************************
+#update the column data by where condition
+---------------------------------
+mysql> update product
+    -> set quantity=40
+    -> where pid=200;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+********************************************
+#change the constraint in the table
+----------------------------------
+mysql> alter table customer modify column price int null;
+Query OK, 0 rows affected (0.10 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+********************************************
+#join the 2 tables on common column name
+=> by defualt inner join
+
+mysql> select * from customer join product on customer.pid=product.pid;
+
+------------------------------------------------
+
+mysql> select customer.cname,customer.price,customer.pid from customer inner join product on customer.pid=product.pid where product.pid is not null;
++--------+-------+------+
+| cname  | price | pid  |
++--------+-------+------+
+| swathi |   250 |  201 |
+| suri   |   280 |  201 |			# inner join by default ignores the null values
+| kiran  |   100 |  200 |
+| janu   |    80 |  201 |
+| gopi   |   280 |  202 |
++--------+-------+------+
+5 rows in set (0.00 sec)
+
+mysql> select customer.cname,customer.price,customer.pid from customer left join product on customer.pid=product.pid where product.pid is not null;
++--------+-------+------+
+| cname  | price | pid  |
++--------+-------+------+
+| swathi |   250 |  201 |
+| suri   |   280 |  201 |			#getting not null records using left join
+| kiran  |   100 |  200 |
+| janu   |    80 |  201 |
+| gopi   |   280 |  202 |
++--------+-------+------+
+5 rows in set (0.00 sec)
+
+mysql> select customer.cname,customer.price,customer.pid from customer left join product on customer.pid=product.pid;
++--------+-------+------+
+| cname  | price | pid  |
++--------+-------+------+
+| swathi |   250 |  201 |
+| suri   |   280 |  201 |			#here it is giving the null records
+| kiran  |   100 |  200 |
+| janu   |    80 |  201 |
+| gopi   |   280 |  202 |
+| suri   |  NULL | NULL |
++--------+-------+------+
+6 rows in set (0.00 sec)

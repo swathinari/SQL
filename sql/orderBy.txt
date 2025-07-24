@@ -1,0 +1,70 @@
+mysql> select price, cname
+    -> from customer
+    -> order by price ;
++-------+--------+
+| price | cname  |
++-------+--------+
+|  NULL | suri   |
+|    80 | janu   |
+|   100 | kiran  |			#by defualt it will give the ascending order
+|   250 | swathi |
+|   280 | suri   |
+|   280 | gopi   |
++-------+--------+
+6 rows in set (0.01 sec)
+------------------------------------------------------------------------------------------
+mysql> select price, cname
+    -> from customer
+    -> order by price desc;
++-------+--------+
+| price | cname  |
++-------+--------+
+|   280 | suri   |
+|   280 | gopi   |
+|   250 | swathi |			# ordering the price by descemnding
+|   100 | kiran  |
+|    80 | janu   |
+|  NULL | suri   |
++-------+--------+
+6 rows in set (0.00 sec)
+
+-------------------------------------------------------------
+
+mysql> select price, cname
+    -> from customer
+    -> where price is not null
+    -> order by price desc;
++-------+--------+
+| price | cname  |
++-------+--------+
+|   280 | suri   |
+|   280 | gopi   |			#ignoring the null values
+|   250 | swathi |
+|   100 | kiran  |
+|    80 | janu   |
++-------+--------+
+5 rows in set (0.00 sec)
+--------------------------------
+ORDER OF THE CLAUSE:
+===== O =====
+1. SELECT
+2. FROM
+3. JOIN (with ON)
+4. WHERE
+5. GROUP BY
+6. HAVING
+7. ORDER BY
+8. LIMIT
+--------------------
+# EXECUTION FLOW OF MYSQL
+
+***FJOWGHSOL***
+1. F: FROM
+2. J: JOIN
+3. O: ON
+4. W: WHERE
+5. G:-GROUP BY
+6. H:-HAVING
+7. S:-SELECT
+8. O:-ORDER BY
+9. L:-LIMIT
